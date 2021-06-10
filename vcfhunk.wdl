@@ -61,8 +61,8 @@ task unzipped {
 		# runtime attributes
 		# much smaller as no unzipping
 		Int addldisk = 1
-		Int cpu = 2
-		Int memory = 2
+		Int cpu = 4
+		Int memory = 4
 		Int preempt = 3
 	}
 	command <<<
@@ -106,7 +106,7 @@ task unzipped {
 workflow vcfhunk {
 	input {
 		Array[File] vcf_files
-		Boolean unzipped = true
+		Boolean unzipped = false
 	}
 
 if (!unzipped) {

@@ -1,3 +1,3 @@
 {
-  "vcfhunk.vcf_files": ["/Users/ash/Downloads/chr6.gdstovcf_incomplete.vcf"]
+  "vcfhunk.vcf_files": ["gs://nih-nhlbi-biodata-catalyst-1000-genomes/CCDG_13607/Project_CCDG_13607_B01_GRM_WGS.JGVariants.2019-04-04/CCDG_13607_B01_GRM_WGS_2019-02-19_chr20.recalibrated_variants.vcf.gz"]
 }
