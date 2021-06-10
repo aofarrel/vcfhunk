@@ -46,6 +46,7 @@ task vcfhunk {
 	}
 	output {
 		Array[File] hunks = glob("*.txt")
+		Array[File] unzipped = glob("*.vcf")
 	}
 }
 
