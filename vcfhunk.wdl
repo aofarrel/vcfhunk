@@ -15,18 +15,18 @@ task vcfhunk {
 	cp ~{vcfgz} .
 	gunzip -f -k ~{basename}
 
-	head -n 40 ~{unzipped}  > "~{basename}_head_0040.txt"
-	sed -n 511 ~{unzipped}  > "~{basename}_line_0511.txt"
+	head -n 40 ~{unzipped}     > "~{basename}_head_0040.txt"
+	sed -n '511'p ~{unzipped}  > "~{basename}_line_0511.txt"
 
-	sed -n 3449 ~{unzipped} > "~{basename}_line_3449.txt"
-	sed -n 3450 ~{unzipped} > "~{basename}_line_3450.txt"
-	sed -n 3451 ~{unzipped} > "~{basename}_line_3451.txt"
+	sed -n '3449'p ~{unzipped} > "~{basename}_line_3449.txt"
+	sed -n '3450'p ~{unzipped} > "~{basename}_line_3450.txt"
+	sed -n '3451'p ~{unzipped} > "~{basename}_line_3451.txt"
 
-	sed -n 3560 ~{unzipped} > "~{basename}_line_3560.txt"
-	sed -n 3561 ~{unzipped} > "~{basename}_line_3561.txt"
-	sed -n 3562 ~{unzipped} > "~{basename}_line_3562.txt"
+	sed -n '3560'p ~{unzipped} > "~{basename}_line_3560.txt"
+	sed -n '3561'p ~{unzipped} > "~{basename}_line_3561.txt"
+	sed -n '3562'p ~{unzipped} > "~{basename}_line_3562.txt"
 
-	tail -n 40 ~{unzipped}  > "~{basename}_tail_0040.txt"
+	tail -n 40 ~{unzipped}     > "~{basename}_tail_0040.txt"
 
 	>>>
 	# Generate filenames
