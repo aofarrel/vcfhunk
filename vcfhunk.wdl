@@ -1,13 +1,16 @@
 version 1.0
 
+# Author: Ash O'Farrell (UC Santa Cruz)
+# This code is only useful for debugging
+
 task zipped {
 	input {
 		File vcfgz
 		# runtime attributes
 		Int addldisk = 50
-		Int cpu = 2
-		Int memory = 4
-		Int preempt = 3
+		Int cpu = 8
+		Int memory = 16
+		Int preempt = 1
 	}
 	command <<<
 	set -eux -o pipefail
@@ -15,8 +18,10 @@ task zipped {
 	cp ~{vcfgz} .
 	gunzip -f -k ~{basename}
 
-	head -n 40 ~{unzipped}     > "~{basename}_head_0040.txt"
+	head -n 50 ~{unzipped}     > "~{basename}_head_0050.txt"
+	sed -n '510'p ~{unzipped}  > "~{basename}_line_0510.txt"
 	sed -n '511'p ~{unzipped}  > "~{basename}_line_0511.txt"
+	sed -n '512'p ~{unzipped}  > "~{basename}_line_0512.txt"
 
 	sed -n '3449'p ~{unzipped} > "~{basename}_line_3449.txt"
 	sed -n '3450'p ~{unzipped} > "~{basename}_line_3450.txt"
@@ -26,7 +31,7 @@ task zipped {
 	sed -n '3561'p ~{unzipped} > "~{basename}_line_3561.txt"
 	sed -n '3562'p ~{unzipped} > "~{basename}_line_3562.txt"
 
-	tail -n 40 ~{unzipped}     > "~{basename}_tail_0040.txt"
+	tail -n 50 ~{unzipped}     > "~{basename}_tail_0050.txt"
 
 	>>>
 	# Generate filenames
@@ -35,7 +40,7 @@ task zipped {
 	
 	# Estimate disk size required
 	Int vcf_size = ceil(size(vcfgz, "GB"))
-	Int finalDiskSize = ceil(5*vcf_size + addldisk)
+	Int finalDiskSize = ceil(10*vcf_size + addldisk)
 	
 	runtime {
 		cpu: cpu
@@ -54,16 +59,19 @@ task unzipped {
 	input {
 		File vcf
 		# runtime attributes
-		Int addldisk = 50
+		# much smaller as no unzipping
+		Int addldisk = 1
 		Int cpu = 2
-		Int memory = 4
+		Int memory = 2
 		Int preempt = 3
 	}
 	command <<<
 	set -eux -o pipefail
 
-	head -n 40 ~{vcf}     > "~{basename}_head_0040.txt"
+	head -n 50 ~{vcf}     > "~{basename}_head_0050.txt"
+	sed -n '510'p ~{vcf}  > "~{basename}_line_0510.txt"
 	sed -n '511'p ~{vcf}  > "~{basename}_line_0511.txt"
+	sed -n '512'p ~{vcf}  > "~{basename}_line_0512.txt"
 
 	sed -n '3449'p ~{vcf} > "~{basename}_line_3449.txt"
 	sed -n '3450'p ~{vcf} > "~{basename}_line_3450.txt"
@@ -73,7 +81,7 @@ task unzipped {
 	sed -n '3561'p ~{vcf} > "~{basename}_line_3561.txt"
 	sed -n '3562'p ~{vcf} > "~{basename}_line_3562.txt"
 
-	tail -n 40 ~{vcf}     > "~{basename}_tail_0040.txt"
+	tail -n 50 ~{vcf}     > "~{basename}_tail_0050.txt"
 
 	>>>
 	# Generate filenames
@@ -81,7 +89,7 @@ task unzipped {
 	
 	# Estimate disk size required
 	Int vcf_size = ceil(size(vcf, "GB"))
-	Int finalDiskSize = ceil(5*vcf_size + addldisk)
+	Int finalDiskSize = ceil(2*vcf_size + addldisk)
 	
 	runtime {
 		cpu: cpu
