@@ -10,9 +10,11 @@ task vcfhunk {
 		Int preempt = 3
 	}
 	command <<<
-	gunzip ~{vcfgz}
+	set -eux -o pipefail
 
-	set -eux -o pipefail 
+	cp ~{vcfgz} .
+	gunzip -f -k ~{basename}
+
 	head -n 40 ~{unzipped}  > "~{basename}_head_0040.txt"
 	sed -n 511 ~{unzipped}  > "~{basename}_line_0511.txt"
 
